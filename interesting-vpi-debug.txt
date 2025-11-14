@@ -1,0 +1,149 @@
+- This is a test to better understand how cocotb drives the simulator via VPI,
+  the relevant debug options were set in the simulator arguments.
+
+DEBUG TEST
+@cocotb.test()
+async def builds(dut):
+    print('hi00')
+    cocotb.start_soon(Clock(dut.clk_i, 1, 'ns').start(start_high=False))
+    print('hi01')
+    await RisingEdge(dut.clk_i)
+    print('hi1', dut.clk_i.value)
+    await ReadWrite()
+    print('hi2')
+    await ReadOnly()
+    print('hi3')
+    await NextTimeStep()
+    print('hi4')
+    await RisingEdge(dut.clk_i)
+    print('hi5')
+
+
+DEBUG OUTPUT
+loading VPI module '/nix/store/rnljn45rkn7f6kg12phpiw2kdxax6jrb-python3.13-cocotb-1.9.2/lib/python3.13/site-packages/cocotb/libs/libcocotbvpi_ghdl.so'
+vpi_register_cb ({reason=cbStartOfSimulation, obj=0000000000000000}) = 00000000341CB970
+vpi_register_cb ({reason=cbEndOfSimulation, obj=0000000000000000}) = 00000000341C6300
+     -.--ns INFO     gpi                                ..mbed/gpi_embed.cpp:93   in _embed_init_python              Using Python 3.13.6 interpreter at /nix/store/4xzapm12vviqabg3v3f6fc79vfn100z1-python3-3.13.6-env/bin/python3.13
+     -.--ns INFO     gpi                                ../gpi/GpiCommon.cpp:79   in gpi_print_registered_impl       VPI registered
+VPI module loaded!
+vpi call callback 00000000341CB970 cbStartOfSimulation
+ vpi_get_vlog_info
+ vpi_get_vlog_info
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 0ms
+     0.00ns INFO     cocotb                             Running on GHDL version 5.1.1 (tarball) [Dunoon edition]
+ vpi_iterate (745, 0000000000000000) = 0000000000000000
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 0ms
+     0.00ns WARNING  gpi                                vpi_iterate returned NULL for type vpiInstance for object NULL
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 0ms
+     0.00ns INFO     cocotb                             Seeding Python random module with 1762424712
+ vpi_iterate (vpiModule, 0000000000000000) = 0000000034FB8ED0
+ vpi_scan (0000000034FB8ED0) = 0000000034F8ED50
+ vpi_get (vpiType, 0000000034F8ED50) = vpiModule
+ vpi_get_str (vpiFullName, 0000000034F8ED50) = "pcap_dma"
+ vpi_free_object (0000000034FB8ED0)
+ vpi_get_str (vpiFullName, 0000000034F8ED50) = "pcap_dma"
+ vpi_get (vpiType, 0000000034F8ED50) = vpiModule
+ vpi_get (vpiTimePrecision, 0000000000000000) = -15
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 0ms
+     0.00ns INFO     cocotb                             Initialized cocotb v2.1.0.dev0 from /nix/store/4xzapm12vviqabg3v3f6fc79vfn100z1-python3-3.13.6-env/lib/python3.13/site-packages/cocotb
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 0ms
+     0.00ns INFO     cocotb                             Running tests
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 0ms
+     0.00ns INFO     cocotb.regression                  running test_pcap_dma.builds (1/2)
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 0ms
+hi00
+ vpi_handle_by_name ("pcap_dma.clk_i", 0000000000000000) = 00000000351D92A0
+ vpi_get (vpiType, 00000000351D92A0) = vpiNet
+ vpi_get (vpiType, 00000000351D92A0) = vpiNet
+ vpi_get (vpiVector, 00000000351D92A0) = 0
+ vpi_get (vpiSize, 00000000351D92A0) = 1
+ vpi_get (vpiType, 00000000351D92A0) = vpiNet
+ vpi_get (vpiSize, 00000000351D92A0) = 1
+ vpi_get (vpiVector, 00000000351D92A0) = 0
+ vpi_get_str (vpiType, 00000000351D92A0) = "vpiNet"
+ vpi_put_value (00000000351D92A0, 0, vpiInertialDelay)
+ vpi_register_cb ({reason=cbAfterDelay, obj=0000000000000000, time=500ps}) = 0000000034F02040
+hi01
+ vpi_register_cb ({reason=cbValueChange, obj=00000000351D92A0}) = 00000000354C04D0
+vpi end callback 00000000341CB970
+../../src/ieee2008/numeric_std-body.vhdl:3036:7:@0ms:(assertion warning): NUMERIC_STD.TO_INTEGER: metavalue detected, returning 0
+../../src/ieee2008/numeric_std-body.vhdl:1776:7:@0ms:(assertion warning): NUMERIC_STD."=": metavalue detected, returning FALSE
+../../src/ieee2008/numeric_std-body.vhdl:1776:7:@0ms:(assertion warning): NUMERIC_STD."=": metavalue detected, returning FALSE
+vpi_get_value (00000000351D92A0, {format=Int}) = 0
+vpi call callback 00000000354C04D0 cbValueChange
+ vpi_get_time (0000000000000000, {mtype=vpiSuppressTime}) = 0ms
+ vpi_get_value (00000000351D92A0, {format=BinStr}) = "0"
+vpi end callback 00000000354C04D0
+../../src/ieee2008/numeric_std-body.vhdl:1776:7:@0ms:(assertion warning): NUMERIC_STD."=": metavalue detected, returning FALSE
+../../src/ieee2008/numeric_std-body.vhdl:1776:7:@0ms:(assertion warning): NUMERIC_STD."=": metavalue detected, returning FALSE
+vpi call callback 0000000034F02040 cbAfterDelay
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 500ps
+ vpi_put_value (00000000351D92A0, 1, vpiInertialDelay)
+ vpi_register_cb ({reason=cbAfterDelay, obj=0000000000000000, time=500ps}) = 0000000035285470
+vpi end callback 0000000034F02040
+vpi_get_value (00000000351D92A0, {format=Int}) = 1
+vpi call callback 00000000354C04D0 cbValueChange
+ vpi_get_time (0000000000000000, {mtype=vpiSuppressTime}) = 500ps
+ vpi_get_value (00000000351D92A0, {format=BinStr}) = "1"
+ vpi_get_value (00000000351D92A0, {format=BinStr}) = "1"
+hi1 1
+ vpi_register_cb ({reason=cbReadWriteSynch, obj=0000000000000000}) = 000000003539FEA0
+ vpi_remove_cb (00000000354C04D0) = [not free] 1
+vpi end callback 00000000354C04D0
+vpi call callback 000000003539FEA0 cbReadWriteSynch
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 500ps
+hi2
+ vpi_register_cb ({reason=cbReadOnlySynch, obj=0000000000000000}) = 000000003527EC00
+vpi end callback 000000003539FEA0
+vpi call callback 000000003527EC00 cbReadOnlySynch
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 500ps
+hi3
+ vpi_register_cb ({reason=cbNextSimTime, obj=0000000000000000}) = 0000000034F02040
+vpi end callback 000000003527EC00
+vpi call callback 0000000034F02040 cbNextSimTime
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 1ns
+hi4
+ vpi_register_cb ({reason=cbValueChange, obj=00000000351D92A0}) = 000000003527EC00
+vpi end callback 0000000034F02040
+vpi call callback 0000000035285470 cbAfterDelay
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 1ns
+ vpi_put_value (00000000351D92A0, 0, vpiInertialDelay)
+ vpi_register_cb ({reason=cbAfterDelay, obj=0000000000000000, time=500ps}) = 000000003539FEA0
+vpi end callback 0000000035285470
+vpi_get_value (00000000351D92A0, {format=Int}) = 0
+vpi call callback 000000003527EC00 cbValueChange
+ vpi_get_time (0000000000000000, {mtype=vpiSuppressTime}) = 1ns
+ vpi_get_value (00000000351D92A0, {format=BinStr}) = "0"
+vpi end callback 000000003527EC00
+vpi call callback 000000003539FEA0 cbAfterDelay
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 1500ps
+ vpi_put_value (00000000351D92A0, 1, vpiInertialDelay)
+ vpi_register_cb ({reason=cbAfterDelay, obj=0000000000000000, time=500ps}) = 00000000341D1410
+vpi end callback 000000003539FEA0
+vpi_get_value (00000000351D92A0, {format=Int}) = 1
+vpi call callback 000000003527EC00 cbValueChange
+ vpi_get_time (0000000000000000, {mtype=vpiSuppressTime}) = 1500ps
+ vpi_get_value (00000000351D92A0, {format=BinStr}) = "1"
+hi5
+ vpi_remove_cb (00000000341D1410) = [free] 1
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 1500ps
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 1500ps
+     1.50ns INFO     cocotb.regression                  test_pcap_dma.builds passed
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 1500ps
+     1.50ns INFO     cocotb.regression                  skipping test_pcap_dma.fill_buffer (2/2)
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 1500ps
+ vpi_get_time (0000000000000000, {mtype=vpiSimTime}) = 1500ps
+     1.50ns INFO     cocotb.regression                  **************************************************************************************
+                                                        ** TEST                          STATUS  SIM TIME (ns)  REAL TIME (s)  RATIO (ns/s) **
+                                                        **************************************************************************************
+                                                        ** test_pcap_dma.builds           PASS           1.50           0.00        580.34  **
+                                                        ** test_pcap_dma.fill_buffer      SKIP           0.00           0.00          -.--  **
+                                                        **************************************************************************************
+                                                        ** TESTS=2 PASS=1 FAIL=0 SKIP=1                  1.50           0.00        452.43  **
+                                                        **************************************************************************************
+
+ vpi_control (vpiFinish, 1)
+ vpi_remove_cb (000000003527EC00) = [not free] 1
+vpi end callback 000000003527EC00
+vpi call callback 00000000341C6300 cbEndOfSimulation
+vpi end callback 00000000341C6300
